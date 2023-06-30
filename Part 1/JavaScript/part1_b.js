@@ -266,3 +266,5 @@ emp1.greet()
 const emp2 = new Employee('Yashwant' , 14)
 
 emp2.greet()
+
+
