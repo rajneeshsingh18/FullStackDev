@@ -44,7 +44,7 @@ function Counter(){
         <>
         <div>
             <h2>
-                Counter
+              <Display counter = {count} />
             </h2>
             <p>
                 Count : {count}
@@ -57,5 +57,18 @@ function Counter(){
     )
 }
 
+
+const Display = (props) =>{
+    return(
+      <>
+      <div>
+        {props.counter}
+      </div>
+      </>
+    )
+  }
+
 // export default App3;
 export default Counter;
+
+export {Display};

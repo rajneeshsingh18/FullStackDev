@@ -5,6 +5,7 @@ import App from './App';
 // import App3  from './stateful_component';
 import Counter  from './stateful_component';
 import Button  from './Event_Handling';
+import FlipCard from './flipkard';
 
 
 // let counter=1;
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       {/* <App3 /> */}
       <Counter />
       <Button />
+      <FlipCard />
     </React.StrictMode>
 )
 
