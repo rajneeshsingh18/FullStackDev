@@ -1,6 +1,24 @@
 import { useState } from "react"
 
 
+const App6 = () =>{
+    const [value , setValue ] =useState(10)
+
+    function resetToZero(){
+        setValue(0);
+    }
+    return(
+        <>
+        <hr/>
+        {value}
+        <button onClick={()=>console.log('Clicked the button')}>Button</button>
+
+        <button onClick={resetToZero}>Reset to Zero</button>
+        {/* <button onClick={()=>setValue(0)}>Reset to Zero</button> */}
+        </>
+    )
+}
+
 // const Button = () =>{
 //     const [counter , setCounter] = useState(0)
 
@@ -138,3 +156,4 @@ const Btn =({handleClick , text})=><> <button onClick={handleClick}> {text}</but
 export default Button;
 export {Display};
 export {Btn}
+export {App6}

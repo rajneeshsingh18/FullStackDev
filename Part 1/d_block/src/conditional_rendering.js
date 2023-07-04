@@ -21,9 +21,18 @@ const History = (props) => {
     )
 }
 
-const Button = ({ handleClick, text }) => (
-    <button onClick={handleClick}>
-      {text}
+// const Button = ({ handleClick, text }) => (
+//     <button onClick={handleClick}>
+//       {text}
+//     </button>
+//   )
+
+  const Button = (props) => (
+    // console.log('props value is'+ props), 
+
+    console.log('props value is',props), 
+    <button onClick={props.handleClick}>
+      {props.text}
     </button>
   )
 

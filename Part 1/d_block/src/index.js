@@ -7,8 +7,13 @@ import App3 from './handling_arrays';
 import reportWebVitals from './reportWebVitals';
 
 import App4 from './state_is_asynchronous';
+import Gallery from './adding_interactivity';
 
 import App5 from './conditional_rendering';
+import App7 ,{App8}from './A_function_that_returns_a_function';
+
+import App9 from './Passing_event_handlers_to_child_components';
+// import App8  from './A_function_that_returns_a_function';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -18,6 +23,11 @@ root.render(
     <App3 />
     <App4 />
     <App5 />
+    <Gallery/>
+    <App7/>
+    <App8/>
+    <App9/>
+
   </React.StrictMode>
 );
 
