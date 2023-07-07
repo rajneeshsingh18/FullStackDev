@@ -1,5 +1,5 @@
 
-//Copyed from Github unable to understant useState function
+//Copyed from ChatGPT unable to understant useState function
 import React, { useState } from 'react';
 
 const FeedbackForm = () => {
