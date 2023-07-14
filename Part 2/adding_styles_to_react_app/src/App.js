@@ -21,6 +21,8 @@ const Note = ({ note, toggleImportance }) => {
 
 
 const Footer = () => {
+
+  //React inline-style
   const footerStyle = {
     color: 'green',
     fontStyle: 'italic',
@@ -40,7 +42,7 @@ const Footer = () => {
 }
 
 const App = () => {
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(null)  //there are many notes that the state will store.
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -59,6 +61,12 @@ const App = () => {
       })
   }, [])
 
+  // do not render anything if notes is still null
+  if (!notes) { 
+    return null 
+  }
+
+
   //initial version of the toggleImportanceOf event
   const toggleImportanceOf = (id) => {
     //The array find method is used to find the note we want to modify,
@@ -72,16 +80,19 @@ const App = () => {
       .then(response => {
         setNotes(notes.map(note => note.id !== id ? note : response.data))
       })
-      .catch(error => {
+      .catch(error =>{
         setErrorMessage(
-          `the note '${note.content}' was already deleted from server`
+          `Note '${note.content}' was alreday removed from server`
         )
-        setTimeout(() => {
+
+        setTimeout(()=>{
           setErrorMessage(null)
-        }, 5000)
-        //Removing an already deleted note from the application's state is done with the array filter method
-        setNotes(notes.filter(note => note.id !== id))
+        } ,5000
+        )
+        setNotes(notes.filter(n=>n.id !== id))
       })
+
+    
 
   }
 

@@ -4,20 +4,38 @@ import axios from 'axios'
 
 import phonebookServices from "./Services/phonebookServices";
 
+
+
+const Notification = ({ message }) => {
+  console.log(message);
+  if (message === null) {
+    return null
+  }
+  return (
+    <>
+      <div className="error">
+        {message}
+
+      </div>
+    </>
+  )
+}
+
 const Phonebook = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null)
 
-  useEffect(()=>{
-    
+  useEffect(() => {
+
     phonebookServices
-    .getAll()
-    .then(response=>{
-      console.log(response.data);
-      setPersons(response.data)
-    })
-  },[])
+      .getAll()
+      .then(response => {
+        console.log(response.data);
+        setPersons(response.data)
+      })
+  }, [])
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -34,6 +52,7 @@ const Phonebook = () => {
     const existingPerson = persons.find(
       (person) => person.name === newName || person.number === newNumber
     );
+
     if (existingPerson) {
       alert(`${newName} or ${newNumber} is already added to the phonebook.`);
     } else {
@@ -41,47 +60,61 @@ const Phonebook = () => {
       setPersons([...persons, newPerson]);
       setNewName('');
       setNewNumber('');
+      // setErrorMessage(`Updated ${newPerson.number} for ${newPerson.name}`);
+      setErrorMessage(`Added ${newPerson.name} having number ${newPerson.number}`);
 
       // 2.12: The Phonebook step7
       phonebookServices
-    .create(newPerson)
-    .then(response=>{
-      // console.log(response);
-      console.log(response.data);
-    })
-    } 
+        .create(newPerson)
+        .then(response => {
+          // console.log(response);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          setErrorMessage('Error occurred during number update');
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        });
+    }
   };
 
-   // 2.14: The Phonebook step9
-   const deletePerson = (person) =>{
-    const confirmErase =window.confirm(`Delete ${person.name}`);
+  // 2.14: The Phonebook step9
+  const deletePerson = (person) => {
+    const confirmErase = window.confirm(`Delete ${person.name}`);
 
-    // if(confirmErase){
-    //   axios
-    //   .delete(`http://localhost:3031/persons/${person.id}`)
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       const updatedPersons = persons.filter((p) => p.id !== person.id);
-    //       setPersons(updatedPersons);
-    //     }
-    //   })
+    if (confirmErase) {
+      axios
+        .delete(`http://localhost:3031/persons/${person.id}`)
+        .then((response) => {
+          if (response.status === 200) {
+            const updatedPersons = persons.filter((p) => p.id !== person.id);
+            setPersons(updatedPersons);
+            setErrorMessage(`Deleted ${person.name} having number ${person.number}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          setErrorMessage(
+            `Deleted `
+          )
 
-    if(confirmErase){
-      phonebookServices
-      .erase(person.id)
-      .then((response) => {
-        if (response.status === 200) {
-          const updatedPersons = persons.filter((p) => p.id !== person.id);
-          setPersons(updatedPersons);
-        }
-      })
-      
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000
+          )
+        })
+
+
+
     }
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={errorMessage} />
       <form onSubmit={addDetails}>
         <label>Name:</label>
         <input value={newName} onChange={handleNameChange} />
@@ -100,7 +133,7 @@ const Phonebook = () => {
 
             <button onClick={() => deletePerson(person)}>Delete</button>
           </li>
-          
+
         ))}
       </ul>
     </div>

@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+
+import Exchange_rate from './Exchange_rate';
 import './index.css'
 
 // import axios from 'axios'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <App />
+  // <App />
+  <Exchange_rate/>
 );
 
 //fulfilled promise
