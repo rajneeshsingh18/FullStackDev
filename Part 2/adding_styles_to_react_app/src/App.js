@@ -27,7 +27,6 @@ const Footer = () => {
     color: 'green',
     fontStyle: 'italic',
     fontSize: 18,
-
   }
 
   return (
@@ -44,7 +43,7 @@ const Footer = () => {
 const App = () => {
   const [notes, setNotes] = useState(null)  //there are many notes that the state will store.
   const [newNote, setNewNote] = useState('')
-  const [showAll, setShowAll] = useState(false)
+  const [showAll, setShowAll] = useState(false) //use for button also
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
@@ -62,15 +61,17 @@ const App = () => {
   }, [])
 
   // do not render anything if notes is still null
-  if (!notes) { 
-    return null 
+  if (!notes) {
+    return null
   }
 
 
   //initial version of the toggleImportanceOf event
   const toggleImportanceOf = (id) => {
+    console.log(id);
     //The array find method is used to find the note we want to modify,
-    const note = notes.find(n => n.id === id)
+    const note = notes.find(n =>
+      n.id === id)
 
     //we create a new object that is an exact copy of the old note, apart from the important property that has the value flipped (from true to false or from false to true).
     const changedNote = { ...note, important: !note.important }
@@ -80,19 +81,20 @@ const App = () => {
       .then(response => {
         setNotes(notes.map(note => note.id !== id ? note : response.data))
       })
-      .catch(error =>{
+      .catch(error => {
+        console.error(error);
         setErrorMessage(
           `Note '${note.content}' was alreday removed from server`
         )
 
-        setTimeout(()=>{
+        setTimeout(() => {
           setErrorMessage(null)
-        } ,5000
+        }, 5000
         )
-        setNotes(notes.filter(n=>n.id !== id))
+        setNotes(notes.filter(n => n.id !== id))
       })
 
-    
+
 
   }
 

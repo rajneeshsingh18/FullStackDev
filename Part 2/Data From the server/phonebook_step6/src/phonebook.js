@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import axios from 'axios'
-
 import phonebookServices from "./Services/phonebookServices";
 
 
 
 const Notification = ({ message }) => {
-  console.log(message);
+  // console.log(message);
   if (message === null) {
     return null
   }
@@ -15,7 +13,6 @@ const Notification = ({ message }) => {
     <>
       <div className="error">
         {message}
-
       </div>
     </>
   )
@@ -61,7 +58,10 @@ const Phonebook = () => {
       setNewName('');
       setNewNumber('');
       // setErrorMessage(`Updated ${newPerson.number} for ${newPerson.name}`);
-      setErrorMessage(`Added ${newPerson.name} having number ${newPerson.number}`);
+      setErrorMessage(`Added ${newPerson.name} having number ${newPerson.number}`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000);
 
       // 2.12: The Phonebook step7
       phonebookServices
@@ -85,8 +85,8 @@ const Phonebook = () => {
     const confirmErase = window.confirm(`Delete ${person.name}`);
 
     if (confirmErase) {
-      axios
-        .delete(`http://localhost:3031/persons/${person.id}`)
+      phonebookServices
+        .erase(person.id)
         .then((response) => {
           if (response.status === 200) {
             const updatedPersons = persons.filter((p) => p.id !== person.id);
@@ -95,7 +95,7 @@ const Phonebook = () => {
           }
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
           setErrorMessage(
             `Deleted `
           )
@@ -116,19 +116,20 @@ const Phonebook = () => {
       <h1>Phonebook</h1>
       <Notification message={errorMessage} />
       <form onSubmit={addDetails}>
-        <label>Name:</label>
+        <label>Name  :</label>
         <input value={newName} onChange={handleNameChange} />
-        <button type="submit">Add Name</button>
-
-        <label>Number:</label>
+        <br/>
+        <label>Number :</label>
         <input value={newNumber} onChange={handleNumberChange} />
-        <button type="submit">Add Number</button>
+        <br/>
+
+        <button type="submit">Add Detailes</button>
       </form>
 
       <h2>Names and Numbers:</h2>
       <ul>
-        {persons.map((person, index) => (
-          <li key={index}>
+        {persons.map((person, i) => (
+          <li key={i}>
             {person.name} {person.number}
 
             <button onClick={() => deletePerson(person)}>Delete</button>
