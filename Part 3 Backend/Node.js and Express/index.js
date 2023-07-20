@@ -2,7 +2,7 @@ console.log("Hello world");
 
 // imports Node's built-in web server module
 // import { createServer } from 'http';
-const http = require('http')
+// const http = require('http')
 
 /*
 //createServer method of the http module to create a new web server.
@@ -30,6 +30,7 @@ let notes = [
     }
   ]
 
+  /*
 const app = http.createServer((request ,response)=>{
 
     // The application/json value in the Content-Type header informs the receiver that the data is in the JSON format.
@@ -44,3 +45,89 @@ const app = http.createServer((request ,response)=>{
 const PORT = 3001;
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`);
+*/
+
+const express = require('express')
+const app = express()
+
+
+app.get('/',(request,response)=>{
+    response.send('<h1>Hello World</h1>')
+})
+
+
+app.get('/api/notes',(request,response)=>{
+    response.json(notes);
+})
+
+
+
+// We can define parameters for routes in express by using the colon syntax:
+app.get('/api/notes/:id',(request,response)=>{
+
+  // Routing refers to how an application’s endpoints (URIs) respond to client requests. For an introduction to routing,
+  // The id parameter in the route of a request can be accessed through the request object:
+  const id = Number(request.params.id)
+  console.log(id);
+
+
+  const note = notes.find(note=>{
+    
+    //The cause of the bug becomes clear. The id variable contains a string '1', whereas the ids of notes are integers.
+   console.log(note.id , typeof note.id , id , typeof id , note.id ===id)
+
+   return note.id === id
+  })
+  console.log(note);
+
+  response.json(note)
+})
+
+
+app.get('/api/notes/:id' ,(request,response)=>{
+  const id = Number(request.params.id);
+  const note = notes.find(note=>note.id===id)
+
+  // If no note is found, the server should respond with the status code 404 not found instead of 200.
+
+  //if-condition leverages the fact that all JavaScript objects are truthy
+  //undefined is falsy
+  if(note){
+    response.json(note)
+  }else{
+    response.status(404).end()
+  }
+
+})
+
+
+//Deleting resources
+app.delete('/api/notes/:id', (request, response) => {
+  const id = Number(request.params.id)
+  notes = notes.filter(note => note.id !== id)
+  response.status(204).end()
+})
+
+
+// Receiving data
+
+//-->To access the data easily, we need the help of the express json-parser that is taken to use with command app.use(express.json()).
+
+//-->The json-parser functions so that it takes the JSON data of a request, transforms it into a JavaScript object and then attaches it to the body property of the request
+app.use(express.json())
+
+app.post('/api/notes',(request,response)=>{
+  const note = request.body
+  console.log(note);
+  response.json(note)
+})
+
+
+const PORT = 3002
+app.listen(PORT,()=>{
+    console.log(`Server runnung on port ${PORT}`);
+})
+
+
+
+

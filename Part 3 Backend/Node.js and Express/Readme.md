@@ -41,14 +41,14 @@
                 response.end('Hello World')
                 })
 
-                const PORT = 3001
+                const PORT = 3002
                 app.listen(PORT)
                 console.log(`Server running on port ${PORT}`)
 
 ➡️Once the application is running, the following message is printed in the console:
-               Server running on port 3001
+               Server running on port 3002
 
-➡️We can open our humble application in the browser by visiting the address http://localhost:3001:
+➡️We can open our humble application in the browser by visiting the address http://localhost:3002:
 
 
 ➡️The primary purpose of the backend server is to offer raw data in JSON format to the frontend.
@@ -83,7 +83,7 @@
                 response.json(notes)
                 })
 
-                const PORT = 3001
+                const PORT = 3002
                 app.listen(PORT, () => {
                 console.log(`Server running on port ${PORT}`)
                 })
@@ -142,3 +142,32 @@
 
                 response.status(204).end()
                 })
+
+# Postman 
+## ➡️Exist for making the testing of backends easier.
+
+
+# The Visual Studio Code REST client
+
+
+<img src="./Images/Rest_Client.png" width="100%" height="100%">
+
+➡️We make a directory at the root of the application named requests. We save all the REST client requests in the directory as files that end with the .rest extension.
+
+
+<img src="./Images/12ea.png" width="100%" height="100%">
+
+
+➡️By clicking the Send Request text, the REST client will execute the HTTP request and the response from the server is opened in the editor.
+<img src="./Images/13new.png" width="100%" height="100%">
+
+
+# The WebStorm HTTP Client 
+## Similiar to REST client
+
+
+# Receving data
+
+-->Make an HTTP POST request to the address http://localhost:3002/api/notes
+-->send all the information for the new note in the request body in JSON format.
+-->
