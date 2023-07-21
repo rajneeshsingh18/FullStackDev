@@ -116,9 +116,31 @@ app.delete('/api/notes/:id', (request, response) => {
 //-->The json-parser functions so that it takes the JSON data of a request, transforms it into a JavaScript object and then attaches it to the body property of the request
 app.use(express.json())
 
+const generateId = ()=>{
+
+  const maxId = notes.length >0 ? Math.max(...notes.map(n=>n.id)) : 0
+
+  return maxId +1
+}
+
 app.post('/api/notes',(request,response)=>{
-  const note = request.body
-  console.log(note);
+  const body = request.body
+
+  if(!body.content){
+    return response.status(400).json({
+      error : 'Content missing'
+    })
+  }
+
+
+  const note = {
+    content : body.content,
+    important : body.important || false,
+    id : generateId(),
+  }
+  notes = notes.concat(note)
+
+  console.log(notes);
   response.json(note)
 })
 
