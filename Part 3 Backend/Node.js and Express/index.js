@@ -108,6 +108,13 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method)
+  console.log('Path:  ', request.path)
+  console.log('Body:  ', request.body)
+  console.log('---')
+  next()
+}
 
 // Receiving data
 
@@ -115,6 +122,8 @@ app.delete('/api/notes/:id', (request, response) => {
 
 //-->The json-parser functions so that it takes the JSON data of a request, transforms it into a JavaScript object and then attaches it to the body property of the request
 app.use(express.json())
+
+app.use(requestLogger)
 
 const generateId = ()=>{
 
@@ -136,13 +145,15 @@ app.post('/api/notes',(request,response)=>{
   const note = {
     content : body.content,
     important : body.important || false,
-    id : generateId(),
+    id : generateId,
   }
   notes = notes.concat(note)
 
   console.log(notes);
   response.json(note)
 })
+
+
 
 
 const PORT = 3002
