@@ -5,7 +5,7 @@ console.log("Hello world");
 // const http = require('http')
 
 /*
-//createServer method of the http module to create a new web server.
+// createServer method of the http module to create a new web server./
 const app = createServer((request , response)=>{
     response.writeHead(200, {'Content-Type' : 'text/plain'})
     response.end('Hello world')
@@ -49,6 +49,9 @@ console.log(`Server running on port ${PORT}`);
 
 const express = require('express')
 const app = express()
+const cors = require('cors')
+
+app.use(cors())
 
 
 app.get('/',(request,response)=>{
@@ -145,7 +148,7 @@ app.post('/api/notes',(request,response)=>{
   const note = {
     content : body.content,
     important : body.important || false,
-    id : generateId,
+    id : generateId(),
   }
   notes = notes.concat(note)
 
@@ -156,7 +159,7 @@ app.post('/api/notes',(request,response)=>{
 
 
 
-const PORT = 3002
+const PORT = 3031
 app.listen(PORT,()=>{
     console.log(`Server runnung on port ${PORT}`);
 })

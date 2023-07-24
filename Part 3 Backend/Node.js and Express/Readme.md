@@ -171,3 +171,26 @@
 -->Make an HTTP POST request to the address http://localhost:3002/api/notes
 -->send all the information for the new note in the request body in JSON format.
 -->
+
+
+
+
+
+# CORS
+
+# Same Origin policy and CORS
+-->The same-origin policy is a security mechanism implemented by browsers in order to prevent session hijacking among other security vulnerabilities.
+
+
+### Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) on a web page to be requested from another domain outside the domain from which the first resource was served. A web page may freely embed cross-origin images, stylesheets, scripts, iframes, and videos. Certain "cross-domain" requests, notably Ajax requests, are forbidden by default by the same-origin security policy.
+
+
+-->In your backend repository, install cors with the command
+
+                Step 1 :npm install cors
+
+-->take the middleware to use and allow for requests from all origins:
+
+                const cors = require('cors')
+                app.use(cors())
+ 
