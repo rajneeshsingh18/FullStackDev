@@ -159,7 +159,7 @@ app.post('/api/notes',(request,response)=>{
 
 
 
-const PORT = 3031
+const PORT = process.env.PORT || 3031
 app.listen(PORT,()=>{
     console.log(`Server runnung on port ${PORT}`);
 })

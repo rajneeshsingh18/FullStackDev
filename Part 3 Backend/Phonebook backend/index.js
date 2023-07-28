@@ -1,38 +1,6 @@
 console.log("Hello World");
 
-const express = require("express");
-const app = express();
-const morgan = require('morgan');
 
-
-
-const requestLogger = (request, response, next) => {
-  console.log("Method:", request.method);
-  console.log("Path:  ", request.path);
-  console.log("Body:  ", request.body);
-  console.log("---");
-  next();
-};
-
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
-
-
-// Middleware
-
-
-// 3.8*: Phonebook backend step8
-morgan.token('body', req => {
-  return JSON.stringify(req.body)
-})
-
-app.use(
-  morgan(':method :url :status :res[content-length] - :response-time ms :body')
-);
-
-app.use(express.json());
-app.use(requestLogger);
 
 let persons = [
   {
@@ -56,6 +24,40 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
+
+const express = require("express");
+const app = express();
+const morgan = require('morgan');
+const requestLogger = (request, response, next) => {
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
+};
+
+app.use(express.json());
+app.use(requestLogger);
+
+
+
+
+
+
+// Middleware
+
+
+// 3.8*: Phonebook backend step8
+morgan.token('body', req => {
+  return JSON.stringify(req.body)
+})
+
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+);
+
+
+
 
 // 3.1: Phonebook backend step1
 app.get("/api/persons", (request, response) => {
@@ -131,7 +133,7 @@ app.post("/api/persons", (request, response) => {
   response.json(newPerson);
 });
 
-app.use(unknownEndpoint)
+
 
 const PORT = 3003;
 

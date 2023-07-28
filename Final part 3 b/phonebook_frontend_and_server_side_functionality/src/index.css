@@ -1,0 +1,159 @@
+.error {
+    color: red;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+.phonebook__container{
+  
+  margin-top: 3%;
+  border: 0px solid darkblue ;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  text-align: center;
+  left: 25vw;
+  position: relative;
+  
+  box-shadow: rgba(12, 12, 179, 0.303) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}
+
+.phonebook__container-h1{
+  color: darkblue;
+  font-weight: 900;
+  font-size: 40px;
+}
+
+.phonebook__container_form label{
+        color: blue;
+        font-size: larger;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: larger;
+        font-variant: small-caps;
+}
+
+.phonebook__container_form input{
+  padding: 10px;
+  border: 1px solid darkblue;
+  border-radius: 5px;
+  color: darkblue;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+
+/* CSS */
+.button-29 {
+  margin: 10px 0px;
+
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, hsl(233, 90%, 26%) 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color:white;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 42px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.button-29:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.button-29:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-29:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+.phonebook__detailes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  flex-direction: column;
+}
+
+.phonebook__detailes-h1{
+  color: darkblue;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.phonebook__detailes li{
+  font-size: 18px;
+  color: darkblue;
+}
+@media screen and (max-width:400px){
+  .phonebook__container{
+    margin-top: 0;
+      background-color: black;
+     
+     
+      display: contents;
+  }
+
+  .phonebook__detailes-h1{
+    
+    font-weight: 600;
+    font-size: 20px;
+  }
+  
+  .phonebook__detailes{
+    display: flex;
+    flex-direction: column;
+  }
+
+}
+@media screen and (max-width:900px){
+.phonebook__container{
+
+  width: 50%;
+  position: relative;
+  left: 185px;
+  margin-top: 10%;
+    
+}
+
+.phonebook__detailes{
+  margin-top: 5%;
+}
+}
+
+
+.phonebook__detailes li{
+  list-style: none;
+}

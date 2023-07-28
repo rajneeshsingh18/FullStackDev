@@ -22,3 +22,5 @@ Open  new terminal in root directory : check db.json available and used in servi
 
 -->In your backend repository, install cors with the command
                 Step 1 :npm install cors
+
+## Debugging Node applications

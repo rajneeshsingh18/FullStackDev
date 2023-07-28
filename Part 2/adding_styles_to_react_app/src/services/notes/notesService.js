@@ -1,5 +1,7 @@
 import axios from "axios";
-const baseUrl ='http://localhost:3031/notes'
+// const baseUrl ='/api/notes'
+const baseUrl =' http://localhost:3031/notes'
+
 
 
 // Promises and Errors
