@@ -25,7 +25,7 @@ const Note = mongoose.model('Note' ,noteSchema)
 
 // Creating  objects
 const note = new Note({
-    content : "CSS is hard",
+    content : "Ne test file",
     important :true,
 })
 

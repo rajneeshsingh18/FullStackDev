@@ -239,7 +239,7 @@
                                 const password = process.argv[2]
 
                                 const url =
-                                `mongodb+srv://fullstack:${password}@cluster0.o1opl.mongodb.net/?retryWrites=true&w=majority`
+                                `mongodb+srv://<username>:${password}@cluster0.o1opl.mongodb.net/?retryWrites=true&w=majority`
 
                                 mongoose.set('strictQuery',false)
                                 mongoose.connect(url)
@@ -266,6 +266,138 @@
 ## Note :Please note the password is the password created for the database user, not your MongoDB Atlas password. Also, if you created a password with special characters, then you'll need to URL encode that password.
 ![Alt text](Images/image-6.png)
 ![Alt text](Images/image-7.png)
+
+
+# Connecting the backend to a database
+
+-->copy-pasting the Mongoose definitions to the index.js file
+
+                                    const mongoose = require('mongoose')
+
+                                    // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+                                    const url =
+                                    `mongodb+srv://fullstack:${password}@cluster0.o1opl.mongodb.net/?retryWrites=true&w=majority`
+
+                                    mongoose.set('strictQuery',false)
+                                    mongoose.connect(url)
+
+                                    const noteSchema = new mongoose.Schema({
+                                    content: String,
+                                    important: Boolean,
+                                    })
+
+                                    const Note = mongoose.model('Note', noteSchema)
+
+# Database configuration into its own module
+
+#### --> Make models directory and note.js file and copy paste the below code in it:
+
+                                            const mongoose = require('mongoose')
+
+                                            mongoose.set('strictQuery', false)
+
+
+                                            const url = process.env.MONGODB_URI
+
+
+                                            console.log('connecting to', url)
+
+                                            mongoose.connect(url)
+
+                                            .then(result => {
+                                                console.log('connected to MongoDB')
+                                            })
+                                            .catch((error) => {
+                                                console.log('error connecting to MongoDB:', error.message)
+                                            })
+
+                                            const noteSchema = new mongoose.Schema({
+                                            content: String,
+                                            important: Boolean,
+                                            })
+
+                                            noteSchema.set('toJSON', {
+                                            transform: (document, returnedObject) => {
+                                                returnedObject.id = returnedObject._id.toString()
+                                                delete returnedObject._id
+                                                delete returnedObject.__v
+                                            }
+                                            })
+
+
+                                            module.exports = mongoose.model('Note', noteSchema)
+
+### Importing the module happens by adding the following line to index.js:
+
+                                    const Note = require('./models/note')
+
+###  when the application is started in terminal :
+                                    MONGODB_URI=address_here npm run dev
+
+## dotenv library
+
+                                    npm install dotenv
+
+#### To use the library, we create a .env file at the root of the project. The environment variables are defined inside of the file, and it can look like this:
+
+                                MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
+                                PORT=3031
+
+#### Inside index.js file
+
+                            require('dotenv').config()
+                            const express = require('express')
+                            const app = express()
+
+                            const Note = require('./models/note')
+
+                            // ..
+
+
+                            const PORT = process.env.PORT
+                            app.listen(PORT, () => {
+                            console.log(`Server running on port ${PORT}`)
+                            })
+
+### It's important that dotenv gets imported before the note model is imported
+
+## Add Enviroment variables in render dashboard
+![Alt text](image.png)
+
+## Using database in route handlers
+
+
+#### --> Creating a new note is accomplished like this:
+
+
+                                app.post('/api/notes', (request, response) => {
+                                const body = request.body
+
+                                if (body.content === undefined) {
+                                    return response.status(400).json({ error: 'content missing' })
+                                }
+
+                                const note = new Note({
+                                    content: body.content,
+                                    important: body.important || false,
+                                })
+
+                                note.save().then(savedNote => {
+                                    response.json(savedNote)
+                                })
+                                })
+
+#### --> Using Mongoose's findById method, fetching an individual note gets changed into the following:
+
+                                app.get('/api/notes/:id', (request, response) => {
+                                Note.findById(request.params.id).then(note => {
+                                    response.json(note)
+                                })
+                                })
+
+
+#### Verifying frontend and backend integration
+
 
 
 
