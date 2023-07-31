@@ -2,7 +2,7 @@ POST http://localhost:3031/api/notes
 Content-Type: application/json
 
 {
-    "content" :"evtr bwrgbwet",
+    "content" :"Working",
     "important":true
 }
 

@@ -1,96 +1,5 @@
 console.log("Hello world");
 
-require('dotenv').config()
-const express = require('express')
-const app = express()
-const cors = require('cors')
-
-// Importing the module 
-const Note = require('./models/note')
-
-
-app.use(cors())
-
-app.get('/api/notes',(request,response)=>{
-  Note.find({}).then(notes=>{
-    response.json(notes)
-});
-})
-
-app.get('/api/notes/:id', (request, response) => {
-  Note.findById(request.params.id).then(note => {
-    response.json(note)
-  })
-})
-
-app.get('/',(request,response)=>{
-  response.send('<h1>Hello World</h1>')
-})
-
-//Deleting resources
-app.delete('/api/notes/:id', (request, response) => {
-const id = Number(request.params.id)
-notes = notes.filter(note => note.id !== id)
-response.status(204).end()
-})
-
-const requestLogger = (request, response, next) => {
-console.log('Method:', request.method)
-console.log('Path:  ', request.path)
-console.log('Body:  ', request.body)
-console.log('---')
-next()
-}
-
-app.use(express.json())
-
-app.use(requestLogger)
-
-const generateId = ()=>{
-
-const maxId = notes.length >0 ? Math.max(...notes.map(n=>n.id)) : 0
-
-return maxId +1
-}
-
-
-app.post('/api/notes', (request, response) => {
-const body = request.body
-
-if (body.content === undefined) {
-  return response.status(400).json({ error: 'content missing' })
-}
-
-const note = new Note({
-  content: body.content,
-  important: body.important || false,
-})
-
-note.save().then(savedNote => {
-  response.json(savedNote)
-})
-})
-
-
-const PORT = process.env.PORT
-app.listen(PORT,()=>{
-  console.log(`Server runnung on port ${PORT}`);
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // imports Node's built-in web server module
 // import { createServer } from 'http';
 // const http = require('http')
@@ -121,7 +30,7 @@ const app = createServer((request , response)=>{
 //     }
 //   ]
 
-  /*
+/*
 const app = http.createServer((request ,response)=>{
 
     // The application/json value in the Content-Type header informs the receiver that the data is in the JSON format.
@@ -138,8 +47,15 @@ app.listen(PORT)
 console.log(`Server running on port ${PORT}`);
 */
 
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const cors = require("cors");
 
+// Importing the module
+const Note = require("./models/note");
 
+app.use(cors());
 
 // const mongoose = require('mongoose')
 
@@ -164,8 +80,15 @@ console.log(`Server running on port ${PORT}`);
 //   }
 // })
 
+app.get("/", (request, response) => {
+  response.send("<h1>Hello World</h1>");
+});
 
-
+app.get("/api/notes", (request, response) => {
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
+});
 
 /*
 // We can define parameters for routes in express by using the colon syntax:
@@ -190,7 +113,11 @@ app.get('/api/notes/:id',(request,response)=>{
 })
 */
 
-
+app.get("/api/notes/:id", (request, response) => {
+  Note.findById(request.params.id).then((note) => {
+    response.json(note);
+  });
+});
 
 /*
 app.get('/api/notes/:id' ,(request,response)=>{
@@ -210,14 +137,52 @@ app.get('/api/notes/:id' ,(request,response)=>{
 })
 */
 
+//Deleting resources
+app.delete("/api/notes/:id", (request, response) => {
+  const id = Number(request.params.id);
+  notes = notes.filter((note) => note.id !== id);
+  response.status(204).end();
+});
 
+const requestLogger = (request, response, next) => {
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
+};
 
 // Receiving data
 
 //-->To access the data easily, we need the help of the express json-parser that is taken to use with command app.use(express.json()).
 
 //-->The json-parser functions so that it takes the JSON data of a request, transforms it into a JavaScript object and then attaches it to the body property of the request
+app.use(express.json());
 
+app.use(requestLogger);
+
+const generateId = () => {
+  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
+
+  return maxId + 1;
+};
+
+app.post("/api/notes", (request, response) => {
+  const body = request.body;
+
+  if (body.content === undefined) {
+    return response.status(400).json({ error: "content missing" });
+  }
+
+  const note = new Note({
+    content: body.content,
+    important: body.important || false,
+  });
+
+  note.save().then((savedNote) => {
+    response.json(savedNote);
+  });
+});
 
 /*
 app.post('/api/notes',(request,response)=>{
@@ -242,8 +207,7 @@ app.post('/api/notes',(request,response)=>{
 })
 */
 
-
-
-
-
-
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Server runnung on port ${PORT}`);
+});
